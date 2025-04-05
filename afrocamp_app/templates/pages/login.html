@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'login.css' %}">
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <div class="container">
+        <p>Acessar o sistema</p>
+    </div>
+    <section id="login-section">
+        <form action="/login/" method="post" class="container">
+            <div id="login-title">
+                <span>Login</span>
+                <img src="{% static 'Logo-Afro-Jogos.png' %}" alt="">
+            </div>
+            <div class="login-field">
+                <label for="email-field" name="email" class="login-label">Email</label>
+                <input id="email-field" type="text">
+            </div>
+            <div class="login-field">
+                <label for="password-field" class="login-label">Senha</label>
+                <input id="password-field" name="password" type="text">
+            </div>
+            <input type="submit" value="Entrar">
+        </form>
+    </section>
 </body>
 </html>
