@@ -9,7 +9,7 @@ class Usuario(models.Model):
     class TipoUsuario(models.TextChoices):
         VISTORIADOR = 'vis', _('Vistoriador')
         ADMINISTRADOR = 'adm', _('Administrador')
-    tipo_usuario = models.CharField(choices=TipoUsuario, max_length=3)
+    tipo_usuario = models.CharField(choices=TipoUsuario, max_length=3, default='vis')
     email = models.CharField(max_length=100)
     senha = models.CharField()
     nome_completo = models.CharField(max_length=100)
@@ -19,20 +19,10 @@ class Funcao(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4())
     descricao_funcao = models.CharField(max_length=100)
     
-class Genero(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid4)
-    descricao_genero = models.CharField(max_length=50)
-
-class Participante(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid4())
-    nome = models.CharField(max_length=100)
-    cpf = models.CharField(max_length=11)
-    telefone = models.CharField(max_length=11, default='', blank=True)
-    email = models.CharField(max_length=100)
-    genero = models.ForeignKey(Genero, on_delete=models.CASCADE)
-    funcao = models.ForeignKey(Funcao, on_delete=models.SET_NULL, null=True)
-    
 class Bairro(models.Model):
+    def __str__(self):
+        return self.nome
+    
     id = models.UUIDField(primary_key=True, default=uuid4())
     class NomeZona(models.TextChoices):
         NORTE = "NORTE", "Zona Norte"
@@ -44,34 +34,72 @@ class Bairro(models.Model):
     nome = models.CharField(max_length=100)
     
 class Clube(models.Model):
+    def __str__(self):
+        return self.nome
+    
     id = models.UUIDField(primary_key=True, default=uuid4())
     nome = models.CharField(max_length=100)
     models.ForeignKey(Bairro, on_delete=models.SET_NULL, null=True, blank=True)
 
 class Esporte(models.Model):
+    def __str__(self):
+        return self.nome
+    
     id = models.UUIDField(primary_key=True, default=uuid4())
     nome = models.CharField(max_length=100)
     
 class Responsavel_Time(models.Model):
+    def __str__(self):
+        return self.nome
+    
     id = models.UUIDField(primary_key=True, default=uuid4())
     nome = models.CharField(max_length=100)
     telefone = models.CharField(max_length=11)
     email = models.CharField(max_length=100)
     
 class Time(models.Model):
+    def __str__(self):
+        return self.nome
+    
     id = models.UUIDField(primary_key=True, default=uuid4())
     clube = models.ForeignKey(Clube, on_delete=models.CASCADE)
     nome = models.CharField(max_length=100)
     # Montar um dicionário de responsável para inicializar um time
     responsavel = models.ForeignKey(Responsavel_Time, on_delete=models.SET_NULL, null=True, blank=True)
     esporte = models.ForeignKey(Esporte, on_delete=models.CASCADE)
-    categoria = models.CharField(CategoriaChoices, max_length=9)
+    categoria = models.CharField(choices=CategoriaChoices, max_length=9)
+    
+    
+class Participante(models.Model):
+    def __str__(self):
+        return self.nome
+    
+    id = models.UUIDField(primary_key=True, default=uuid4())
+    nome = models.CharField(max_length=100)
+    cpf = models.CharField(max_length=11)
+    telefone = models.CharField(max_length=11, default='', blank=True)
+    email = models.CharField(max_length=100)
+    
+    class Genero(models.TextChoices):
+        MASCULINO = "MASCULINO", "Masculino"
+        FEMININO = "FEMININO", "Feminino"
+        OUTRO = "OUTRO", "Outro"
+    genero = models.CharField(choices=Genero, max_length=10)
+    time = models.ForeignKey(Time, on_delete=models.SET_NULL, null=True)
+    funcao = models.ForeignKey(Funcao, on_delete=models.SET_NULL, null=True)
 
 class Fase(models.Model):
+    def __str__(self):
+        return self.descricao
+    
     id = models.UUIDField(primary_key=True, default=uuid4())
     descricao = models.CharField(max_length=100)
 
 class Jogo(models.Model):
+    def __str__(self):
+        return f"{self.time_1} X {self.time_2} | {self.tempo_inicio}"
+    
+    
     id = models.UUIDField(primary_key=True, default=uuid4())
     tempo_inicio = models.DateTimeField(default=datetime.now)
     tempo_fim = models.DateTimeField(null=True, blank=True)
