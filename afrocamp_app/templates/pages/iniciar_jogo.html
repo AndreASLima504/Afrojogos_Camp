@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/f842f81dd4.js" crossorigin="anonymous"></script>   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <title>Registrar novo jogo</title>
+</head>
+<body>
+    <div class="header">
+        <a href="jogos.html"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1>Novo jogo</h1>
+    </div>
+    <div class="cadastro">
+        <form action="" method="post">
+            <label for="Time da casa">Time da casa</label>
+            <select name=""></select>
+            <label for="Time da casa">Time visitante</label>
+            <select name=""></select>
+        </form>
+    </div>
+</body>
+{% include 'pages/partials/footer_nav.html'%}
+</html>

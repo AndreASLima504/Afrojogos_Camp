@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;    
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+  }
+  
+  .header {
+    background-color: #8B0C0C;
+    color: white;
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  
+  }
+  a{
+    text-decoration: none;
+    color: black;
+  }
+  .header a{
+    text-decoration: none;
+    color: white;
+  }
+  .header h1 {
+    font-size: 1.8rem;
+    line-height: 1.3;
+  }
+  
+  .container {
+    padding: 1.5rem;
+  }
+  
+  .login-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .login-title h2 {
+    font-size: 1.5rem;
+  }
+  
+  .logo {
+    height: 100px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  label {
+    font-size: 1rem;
+  }
+  
+  input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #555;
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #8B0C0C;
+    color: white;
+    padding: 0.7rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+  h2{
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .cadastro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* Alinha no centro horizontal */
+    justify-content: center; /* Alinha no centro vertical */
+    text-align: center;      /* Centraliza o texto (opcional) */
+  }
+    
+  button:hover {
+    background-color: #a00e0e;
+  }
+  nav{
+      position: fixed;
+      left: 0px;
+      padding: 10px;
+      bottom: 0px;
+      width: 100%;
+      background-color: #fff;
+    }
+  nav ul{
+      list-style-type: none;
+      margin: 0px;
+      padding: 0px;
+      display: flex;
+      justify-content: space-around;
+    }
+  
+  .lista-jogo {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      gap: 20px;
+      max-width: 400px;
+      font-family: Arial, sans-serif;
+      padding: 5%;
+      justify-content: center;
+   
+    }
+    
+  .lista-jogo li {
+      width: 45%; /* duas colunas */
+      margin-bottom: 10px;
+    }
+  .container{
+      display: flex;
+      justify-content: center;  /* centro horizontal */
+    }
+  
+  .ocorrencias{
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      padding: 10px;
+    }
+    .lista-jogo input{
+      width: 50px;
+      height: 25px;
+    }
+    .list-ocorrencias{
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+        width: fit-content;
+        padding: 10px;
+      
+    }
+    .titulo{
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .linha {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .coluna {
+      width: 25%;
+    }
+  
+    .label {
+      font-weight: bold;
+    }
+
+    .footer_nav{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }

@@ -111,13 +111,18 @@ class Jogo(models.Model):
     fase = models.ForeignKey(Fase, on_delete=models.CASCADE)
 
 class Torneio(models.Model):
+    def __str__(self):
+        return f"{self.esporte} - {self.categoria}"
+    
     id = models.UUIDField(primary_key=True, default=uuid4())
     categoria = models.CharField(max_length=9, choices=CategoriaChoices)
     esporte = models.ForeignKey(Esporte, on_delete=models.CASCADE)
-    vencedor = models.ForeignKey(Time, on_delete=models.SET_NULL, null=True, blank=True)
+    vencedor = models.ForeignKey(Time, on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
     
-class Ocorrencia(models.Model):    
+class Ocorrencia(models.Model):
+    def __str__(self):
+        return f"{self.tipo_ocorrencia} no {self.jogo}"
     class TipoOcorrencia(models.TextChoices):
         GOL = 'gol', _('Gol')
         AMARELO_FALTA = 'am_ft', _('Cartão Amarelo: falta')
@@ -133,6 +138,8 @@ class Ocorrencia(models.Model):
     jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE)
     
 class OcorrenciaParticipante(models.Model):
+    def __str__(self):
+        return f"{self.participante} {self.envolvimento} de {self.ocorrencia}"
     id = models.UUIDField(primary_key=True, default=uuid4())
     participante = models.ForeignKey(Participante, on_delete=models.CASCADE)
     class Envolvimento(models.TextChoices):

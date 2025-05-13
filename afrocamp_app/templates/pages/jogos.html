@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/f842f81dd4.js" crossorigin="anonymous"></script>   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <title>Jogos</title>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1>Jogos</h1>
+        <p></p>
+    </div>
+    
+    <div class="cadastro">
+        <h2>Registrar novo Jogo</h2>
+        <a href="createGame.html"><i class="fa-solid fa-plus"></i></a>
+    </div>
+    <hr>
+    <!-- lista de jogos -->
+</body>
+{% include 'pages/partials/footer_nav.html' %}
+</html>
