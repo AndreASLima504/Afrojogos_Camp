@@ -64,7 +64,6 @@ class Time(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4())
     clube = models.ForeignKey(Clube, on_delete=models.CASCADE)
     nome = models.CharField(max_length=100)
-    # Montar um dicionário de responsável para inicializar um time
     responsavel = models.ForeignKey(Responsavel_Time, on_delete=models.SET_NULL, null=True, blank=True)
     esporte = models.ForeignKey(Esporte, on_delete=models.CASCADE)
     categoria = models.CharField(choices=CategoriaChoices, max_length=9)

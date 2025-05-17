@@ -1,10 +1,15 @@
 from django.shortcuts import render
+from .models import *
 
 def login(request):
     return render(request, 'pages/login.html')
 
 def jogos(request):
-    return render(request, 'pages/jogos.html')
+    jogos = Jogo.objects.all().order_by('-tempo_fim')
+    context = {
+        'jogos': jogos
+    }
+    return render(request, 'pages/jogos.html', context)
 
 def times(request):
     return render(request, 'pages/times.html')

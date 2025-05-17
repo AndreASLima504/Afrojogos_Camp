@@ -21,6 +21,11 @@
     </div>
     <hr>
     <!-- lista de jogos -->
+
+    {% for j in jogos %}
+        {% include 'pages/partials/item_jogo.html' %}
+    {% endfor %}
+    
 </body>
 {% include 'pages/partials/footer_nav.html' %}
 </html>
