@@ -141,7 +141,7 @@
       width: 50px;
       height: 25px;
     }
-    .list-ocorrencias{
+    .item-ocorrencia{
       display: flex;
       flex-direction: column;
       font-family: Arial, sans-serif;

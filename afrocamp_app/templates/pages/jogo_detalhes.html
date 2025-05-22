@@ -6,16 +6,15 @@
     <script src="https://kit.fontawesome.com/f842f81dd4.js" crossorigin="anonymous"></script>   
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main.css' %}">
-    <title>Registrar novo jogo</title>
+    <title></title>
 </head>
 <body>
     <div class="header">
         <a href="jogos.html"><i class="fa-solid fa-arrow-left"></i></a>
         <h1>Detalhes</h1>
-        <p></p>
     </div>
     <div class="cadastro">
-        <h2>Zonalestos X Butantanos</h2>
+        <h2>{{ jogo.time_1.nome }} X {{ jogo.time_2.nome }}</h2>
         
     </div>
     <hr>
@@ -23,21 +22,25 @@
         <ol class="lista-jogo">
             <li>
               <strong>Resultado:</strong><br>
-              Zonalestos: 3<br>
-              Butantanos: 0
+              {{jogo.time_1.nome}}: {{ jogo.pontuacao_time1 }}
+              {{jogo.time_2.nome}}: {{ jogo.pontuacao_time2 }}
             </li>
             <li>
               <strong>Categoria:</strong><br>
-              3x0 - Futebol - Sub 20
+              {{jogo.time_1.get_categoria_display}}
             </li>
             <li>
               <strong>Data:</strong><br>
-              EM<br>
-              ANDAMENTO
+              {% if not jogo.tempo_fim %}
+                EM<br>
+                ANDAMENTO
+              {% else %}
+                {{jogo.tempo_fim}}
+              {% endif %}
             </li>
             <li>
               <strong>Etapa:</strong><br>
-              Quartas de Finais
+              {{jogo.fase}}
             </li>
           </ol>
     </div>
@@ -50,17 +53,9 @@
     <hr>
 
     <h2>Ocorrências</h2>
-    <div class="list-ocorrencias">
-        <div class="titulo">TYPE - TEAM</div>
-        <div class="linha">
-            <div class="coluna"><span class="label">Causador:</span><br>Jorge Felipe</div>
-            <div class="coluna"><span class="label">Vítima:</span><br>Mateus Asato</div>
-        </div>
-        <div class="linha">
-            <div class="coluna"><span class="label">Tempo de Jogo:</span><br>35:34</div>
-        </div>
-    </div>
-    <hr>
+    {% for ocorrencia in jogo.ocorrencia %}
+      {% include 'pages/partials/item_ocorrencia.html' %}
+    {% endfor %}
 </body>
 {% include 'pages/partials/footer_nav.html'%}
 </html>

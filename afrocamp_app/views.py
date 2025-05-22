@@ -11,6 +11,13 @@ def jogos(request):
     }
     return render(request, 'pages/jogos.html', context)
 
+def detalhes_jogo(request, id_jogo):
+    jogo = Jogo.objects.get(id=id_jogo)
+    context = {
+        'jogo': jogo
+    }
+    return render(request, 'pages/jogo_detalhes.html', context)
+
 def times(request):
     return render(request, 'pages/times.html')
 

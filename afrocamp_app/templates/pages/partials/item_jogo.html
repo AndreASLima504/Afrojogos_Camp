@@ -1,5 +1,5 @@
 <article class="item_jogo">
-    <h2>{{j.time_1.nome}} X {{j.time_2.nome}}</h2>
+    <a href="/jogos/{{ j.id }}"><h2>{{j.time_1.nome}} X {{j.time_2.nome}}</h2></a>
     <p>Placar: {{j.pontuacao_time1}}x{{j.pontuacao_time2}} - {{j.time_1.esporte.nome}} - {{j.time_1.get_categoria_display}}</p>
     <p><time>{{j.tempo_fim}}</time> - {{j.fase}}</p>
 </article>
