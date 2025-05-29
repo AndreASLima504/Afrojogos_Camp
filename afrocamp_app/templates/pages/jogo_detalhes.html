@@ -1,61 +1,78 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script src="https://kit.fontawesome.com/f842f81dd4.js" crossorigin="anonymous"></script>   
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'main.css' %}">
-    <title></title>
-</head>
-<body>
-    <div class="header">
-        <a href="jogos.html"><i class="fa-solid fa-arrow-left"></i></a>
-        <h1>Detalhes</h1>
-    </div>
-    <div class="cadastro">
-        <h2>{{ jogo.time_1.nome }} X {{ jogo.time_2.nome }}</h2>
-        
-    </div>
-    <hr>
-    <div class="container">
-        <ol class="lista-jogo">
-            <li>
-              <strong>Resultado:</strong><br>
-              {{jogo.time_1.nome}}: {{ jogo.pontuacao_time1 }}
-              {{jogo.time_2.nome}}: {{ jogo.pontuacao_time2 }}
-            </li>
-            <li>
-              <strong>Categoria:</strong><br>
-              {{jogo.time_1.get_categoria_display}}
-            </li>
-            <li>
-              <strong>Data:</strong><br>
-              {% if not jogo.tempo_fim %}
-                EM<br>
-                ANDAMENTO
-              {% else %}
-                {{jogo.tempo_fim}}
-              {% endif %}
-            </li>
-            <li>
-              <strong>Etapa:</strong><br>
-              {{jogo.fase}}
-            </li>
-          </ol>
-    </div>
-    <hr>
-    
-    <div class="ocorrencias">
-        <h3>Nova ocorrência</h3>
-        <a href=""><i class="fa-solid fa-plus"></i></a>
-    </div>
-    <hr>
 
-    <h2>Ocorrências</h2>
-    {% for ocorrencia in jogo.ocorrencia %}
-      {% include 'pages/partials/item_ocorrencia.html' %}
-    {% endfor %}
+<head>
+  <meta charset="UTF-8">
+  <script src="https://kit.fontawesome.com/f842f81dd4.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+  <title></title>
+</head>
+
+<body>
+  <div class="header">
+    <a href="jogos.html"><i class="fa-solid fa-arrow-left"></i></a>
+    <h1>Detalhes</h1>
+  </div>
+  
+  <div class="titulo">
+    <h2>{{ jogo.time_1.nome }} X {{ jogo.time_2.nome }}</h2>
+  </div>
+  <hr>
+  <div class="container">
+    <section id="detalhes-jogo">
+
+    </section>
+    <div class="dados-jogo">
+      <div class="info-jogo">
+        <span>Resultado:</span><br>
+        {{jogo.time_1.nome}}: {{ jogo.pontuacao_time1 }}
+        {{jogo.time_2.nome}}: {{ jogo.pontuacao_time2 }}
+
+      </div>
+      <div class="info-jogo">
+        <span>Categoria:</span><br>
+        {{jogo.time_1.get_categoria_display}}
+      </div>
+
+      <div class="info-jogo">
+        <span>Data:</span><br>
+        {% if not jogo.tempo_fim %}
+        EM<br>
+        ANDAMENTO
+        {% else %}
+        {{jogo.tempo_fim}}
+        {% endif %}
+      </div>
+
+      <div class="info-jogo">
+        <span>Etapa:</span><br>
+        {{jogo.fase}}
+      </div>
+    </div>
+    {% if not jogo.tempo_fim %}
+    <div>
+      <button>Encerrar Jogo</button>
+    </div>
+    {% endif %}
+
+  </div>
+  <hr>
+
+  <div class="ocorrencias">
+    <h3>Nova ocorrência</h3>
+    <a href=""><i class="fa-solid fa-plus"></i></a>
+  </div>
+  <hr>
+
+  <h2>Ocorrências</h2>
+  {% for o in ocorrencias %}
+  {% include 'pages/partials/ocorrencia_falta.html' %}
+  {% endfor %}
+
+
+  {% include 'pages/partials/footer_nav.html'%}
 </body>
-{% include 'pages/partials/footer_nav.html'%}
+
 </html>

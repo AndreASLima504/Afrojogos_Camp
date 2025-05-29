@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from .choices import CategoriaChoices
 
 class Usuario(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     class TipoUsuario(models.TextChoices):
         VISTORIADOR = 'vis', _('Vistoriador')
         ADMINISTRADOR = 'adm', _('Administrador')
@@ -16,14 +16,16 @@ class Usuario(models.Model):
 
 
 class Funcao(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
+    def __str__(self):
+        return self.descricao_funcao
     descricao_funcao = models.CharField(max_length=100)
     
 class Bairro(models.Model):
     def __str__(self):
         return self.nome
     
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     class NomeZona(models.TextChoices):
         NORTE = "NORTE", "Zona Norte"
         SUL = "SUL", "Zona Sul"
@@ -37,7 +39,7 @@ class Clube(models.Model):
     def __str__(self):
         return self.nome
     
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     nome = models.CharField(max_length=100)
     models.ForeignKey(Bairro, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -45,14 +47,14 @@ class Esporte(models.Model):
     def __str__(self):
         return self.nome
     
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     nome = models.CharField(max_length=100)
     
 class Responsavel_Time(models.Model):
     def __str__(self):
         return self.nome
     
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     nome = models.CharField(max_length=100)
     telefone = models.CharField(max_length=11)
     email = models.CharField(max_length=100)
@@ -61,7 +63,7 @@ class Time(models.Model):
     def __str__(self):
         return self.nome
     
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     clube = models.ForeignKey(Clube, on_delete=models.CASCADE)
     nome = models.CharField(max_length=100)
     responsavel = models.ForeignKey(Responsavel_Time, on_delete=models.SET_NULL, null=True, blank=True)
@@ -73,7 +75,7 @@ class Participante(models.Model):
     def __str__(self):
         return self.nome
     
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     nome = models.CharField(max_length=100)
     cpf = models.CharField(max_length=11)
     telefone = models.CharField(max_length=11, default='', blank=True)
@@ -91,7 +93,7 @@ class Fase(models.Model):
     def __str__(self):
         return self.descricao
     
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     descricao = models.CharField(max_length=100)
 
 class Jogo(models.Model):
@@ -99,7 +101,7 @@ class Jogo(models.Model):
         return f"{self.time_1} X {self.time_2} | {self.tempo_inicio}"
     
     
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     tempo_inicio = models.DateTimeField(default=datetime.now)
     tempo_fim = models.DateTimeField(null=True, blank=True)
     pontuacao_time1 = models.IntegerField(default=0)
@@ -111,9 +113,9 @@ class Jogo(models.Model):
 
 class Torneio(models.Model):
     def __str__(self):
-        return f"{self.esporte} - {self.categoria}"
+        return f"{self.esporte} - {self.get_categoria_display()}"
     
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     categoria = models.CharField(max_length=9, choices=CategoriaChoices)
     esporte = models.ForeignKey(Esporte, on_delete=models.CASCADE)
     vencedor = models.ForeignKey(Time, on_delete=models.SET_NULL, null=True, blank=True, default=None)
@@ -121,7 +123,7 @@ class Torneio(models.Model):
     
 class Ocorrencia(models.Model):
     def __str__(self):
-        return f"{self.tipo_ocorrencia} no {self.jogo}"
+        return f"{self.get_tipo_ocorrencia_display()} no {self.jogo}"
     class TipoOcorrencia(models.TextChoices):
         GOL = 'gol', _('Gol')
         AMARELO_FALTA = 'am_ft', _('Cartão Amarelo: falta')
@@ -130,16 +132,20 @@ class Ocorrencia(models.Model):
         VERMELHO_MISC = 'verm_misc', _('Cartão Vermelho: outros motivos')
         FALTA = 'ft', _('Falta')
         
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     tipo_ocorrencia = models.CharField(choices=TipoOcorrencia)
-    tempo_jogo = models.TimeField(auto_now=False, auto_now_add=False)
-    envolvidos = models.ManyToManyField(Participante, through="OcorrenciaParticipante")
     jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE)
+    tempo_jogo = models.DurationField()
+    envolvidos = models.ManyToManyField(Participante, through="OcorrenciaParticipante")
+    def save(self, *args, **kwargs):
+        if not self.tempo_jogo and self.jogo and self.jogo.tempo_inicio:
+            self.tempo_jogo = datetime.now() - self.jogo.tempo_inicio
+        super().save(*args, **kwargs)
     
 class OcorrenciaParticipante(models.Model):
     def __str__(self):
-        return f"{self.participante} {self.envolvimento} de {self.ocorrencia}"
-    id = models.UUIDField(primary_key=True, default=uuid4())
+        return f"{self.participante} {self.get_envolvimento_display()} de {self.ocorrencia}"
+    id = models.UUIDField(primary_key=True, default=uuid4)
     participante = models.ForeignKey(Participante, on_delete=models.CASCADE)
     class Envolvimento(models.TextChoices):
         CAUSADOR = 'cs', _('Causador')

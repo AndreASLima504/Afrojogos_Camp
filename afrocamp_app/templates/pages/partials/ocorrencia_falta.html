@@ -1,0 +1,9 @@
+    <div class="item-ocorrencia container">
+        <div class="titulo">{{o.tipo_ocorrencia}}</div>
+            {% for envolvido in o.envolvidos %}
+                <div><span class="label">{{envolvido.envolvimento}}:</span><span>{{envolvido.participante.nome}}</span></div>
+            {% endfor %}
+            <div><span class="label">Tempo de Jogo:</span><span>{{ o.tempo_jogo }}</span></div>
+        </div>
+    </div>
+<hr>

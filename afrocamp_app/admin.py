@@ -9,6 +9,8 @@ admin.site.register(Time)
 @admin.register(Participante)
 class ParticipanteAdmin(admin.ModelAdmin):
     list_display = ['id', 'nome', 'funcao', 'time', 'telefone']
+    
+
 admin.site.register(Bairro)
 admin.site.register(Clube)
 admin.site.register(Esporte)

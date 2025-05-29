@@ -1,6 +1,12 @@
 <article class="item_jogo">
     <a href="/jogos/{{ j.id }}"><h2>{{j.time_1.nome}} X {{j.time_2.nome}}</h2></a>
-    <p>Placar: {{j.pontuacao_time1}}x{{j.pontuacao_time2}} - {{j.time_1.esporte.nome}} - {{j.time_1.get_categoria_display}}</p>
-    <p><time>{{j.tempo_fim}}</time> - {{j.fase}}</p>
+    <div class="dados-jogo">
+        <p>Placar: {{j.pontuacao_time1}}x{{j.pontuacao_time2}} - {{j.time_1.esporte.nome}} - {{j.time_1.get_categoria_display}}</p>
+        {% if not j.tempo_fim %}
+            <p>EM ANDAMENTO</p>
+        {% else %}
+            <p><time>{{j.tempo_fim}}</time> - {{j.fase}}</p>
+        {%endif%}
+    </div>
 </article>
 <hr>
